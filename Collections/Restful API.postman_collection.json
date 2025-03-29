@@ -1,0 +1,398 @@
+{
+	"info": {
+		"_postman_id": "62791d7b-6e9c-4509-9a30-02b99bb5fad1",
+		"name": "Restful API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43298991"
+	},
+	"item": [
+		{
+			"name": "Create Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Token is generated\", function() {\r",
+							"    let jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('token');\r",
+							"    pm.environment.set(\"authToken\", jsonData.token); \r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.log(\"Verifying That Token is Created\")"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"admin\",\r\n    \"password\" : \"password123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/auth",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create booking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Booking ID is returned\", function() {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('bookingid');\r",
+							"    pm.environment.set(\"bookingId\", jsonData.bookingid); \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches firstname\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Maadhav\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches lastname\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Hira\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is more than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.above(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.log(\"Verifying That Booking is Created\")"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\" : \"Maadhav\",\r\n    \"lastname\" : \"Hira\",\r\n    \"totalprice\" : 156,\r\n    \"depositpaid\" : true,\r\n    \"bookingdates\" : {\r\n        \"checkin\" : \"2025-03-24\",\r\n        \"checkout\" : \"2025-03-29\"\r\n    },\r\n    \"additionalneeds\" : \"Dinner\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/booking",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Checking new Booking which we have created",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Body matches fistname\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Maadhav\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches lastname\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Hira\");\r",
+							"    console.log(\"Booking Id Created Sucessfully\")\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches checkin date\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"2025-03-24\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches checkout date\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"2025-03-29\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.log(\"Verifying That Booking which we have created earlier matches with Current Request\")"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/booking/{{bookingId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"booking",
+						"{{bookingId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Booking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(\"Update Sucesfully\")\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Verify updated additionalneeds\", function() {\r",
+							"    pm.expect(jsonData.additionalneeds).to.eql(\"Breakfast\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify updated depositpaid\", function() {\r",
+							"    pm.expect(jsonData.depositpaid).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    pm.expect(jsonData.totalprice).to.eql(156);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is more than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.above(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.log(\"Verifying Updated Booking\")"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{authToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\": \"Maadhav\",\r\n    \"lastname\": \"Hira\",\r\n    \"totalprice\": 156,\r\n    \"depositpaid\": false,\r\n    \"bookingdates\": {\r\n        \"checkin\": \"2025-03-24\",\r\n        \"checkout\": \"2025-03-29\"\r\n    },\r\n    \"additionalneeds\": \"Breakfast\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/booking/{{bookingId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"booking",
+						"{{bookingId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Partially Update Booking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(\"Update Partially Sucesfully\")\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Verify updated checkin date\", function() {\r",
+							"    pm.expect(jsonData.bookingdates.checkin).to.eql(\"2025-03-20\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify updated checkout date\", function() {\r",
+							"    pm.expect(jsonData.bookingdates.checkout).to.eql(\"2025-03-25\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is more than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.above(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.log(\"Verifying Partially Updated Booking\")"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{authToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"bookingdates\": {\r\n        \"checkin\": \"2025-03-20\",\r\n        \"checkout\": \"2025-03-25\"\r\n    }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/booking/{{bookingId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"booking",
+						"{{bookingId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete the booking which we have created",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"    console.log(\"Booking Deleted Sucessfully\")\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.log(\"Verifying That Booking is Deleted\")"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{authToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}/booking/{{bookingId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"booking",
+						"{{bookingId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

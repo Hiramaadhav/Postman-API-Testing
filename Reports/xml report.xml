@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Restful API" tests="6" time="2.779">
+  <testsuite name="Create Token" id="574d3832-e568-4471-bb48-6d7c0bd90f04" timestamp="2025-03-29T18:29:53.647Z" tests="2" failures="0" errors="0" time="1.511">
+    <testcase name="Status code is 200" time="1.511" classname="CreateToken"/>
+    <testcase name="Token is generated" time="1.511" classname="CreateToken"/>
+  </testsuite>
+  <testsuite name="Create booking" id="bbe80b54-462b-4a77-90cb-1c6728a7e512" timestamp="2025-03-29T18:29:53.647Z" tests="5" failures="0" errors="0" time="0.258">
+    <testcase name="Booking ID is returned" time="0.258" classname="CreateBooking"/>
+    <testcase name="Status code is 200" time="0.258" classname="CreateBooking"/>
+    <testcase name="Body matches firstname" time="0.258" classname="CreateBooking"/>
+    <testcase name="Body matches lastname" time="0.258" classname="CreateBooking"/>
+    <testcase name="Response time is more than 200ms" time="0.258" classname="CreateBooking"/>
+  </testsuite>
+  <testsuite name="Checking new Booking which we have created" id="36a6d501-9f98-4976-a58f-240c70f1bc44" timestamp="2025-03-29T18:29:53.647Z" tests="5" failures="0" errors="0" time="0.252">
+    <testcase name="Body matches fistname" time="0.252" classname="CheckingNewBookingWhichWeHaveCreated"/>
+    <testcase name="Body matches lastname" time="0.252" classname="CheckingNewBookingWhichWeHaveCreated"/>
+    <testcase name="Body matches checkin date" time="0.252" classname="CheckingNewBookingWhichWeHaveCreated"/>
+    <testcase name="Body matches checkout date" time="0.252" classname="CheckingNewBookingWhichWeHaveCreated"/>
+    <testcase name="Status code is 200" time="0.252" classname="CheckingNewBookingWhichWeHaveCreated"/>
+  </testsuite>
+  <testsuite name="Update Booking" id="df1fcd9c-10ad-4205-a822-398659708fd0" timestamp="2025-03-29T18:29:53.647Z" tests="5" failures="0" errors="0" time="0.249">
+    <testcase name="Status code is 200" time="0.249" classname="UpdateBooking"/>
+    <testcase name="Verify updated additionalneeds" time="0.249" classname="UpdateBooking"/>
+    <testcase name="Verify updated depositpaid" time="0.249" classname="UpdateBooking"/>
+    <testcase name="Your test name" time="0.249" classname="UpdateBooking"/>
+    <testcase name="Response time is more than 200ms" time="0.249" classname="UpdateBooking"/>
+  </testsuite>
+  <testsuite name="Partially Update Booking" id="605d48d2-26db-4aea-8c60-db38673373e7" timestamp="2025-03-29T18:29:53.647Z" tests="4" failures="0" errors="0" time="0.251">
+    <testcase name="Status code is 200" time="0.251" classname="PartiallyUpdateBooking"/>
+    <testcase name="Verify updated checkin date" time="0.251" classname="PartiallyUpdateBooking"/>
+    <testcase name="Verify updated checkout date" time="0.251" classname="PartiallyUpdateBooking"/>
+    <testcase name="Response time is more than 200ms" time="0.251" classname="PartiallyUpdateBooking"/>
+  </testsuite>
+  <testsuite name="Delete the booking which we have created" id="6f314492-70f2-4a2e-b7e1-8e1d1a36bbed" timestamp="2025-03-29T18:29:53.647Z" tests="1" failures="0" errors="0" time="0.258">
+    <testcase name="Status code is 201" time="0.258" classname="DeleteTheBookingWhichWeHaveCreated"/>
+  </testsuite>
+</testsuites>
